@@ -69,9 +69,9 @@ def download_audio_urls(url_file='youtube_urls.txt', target_folder='downloads', 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Download audio from YouTube videos.')
-    parser.add_argument('--bitrate', type=int, default=128, help='audio bitrate in kbps')
+    parser.add_argument('--bitrate', type=int, default=128, help='audio bitrate in kbps (default: 128 kbps)')
     parser.add_argument('--target_folder', type=str, default='downloads', help='target folder path (default: downloads)')
-    parser.add_argument('--url_file', type=str, default='youtube_urls.txt', help='path to the file containing the YouTube video URLs')
+    parser.add_argument('--url_file', type=str, default='youtube_urls.txt', help='path to the file containing the YouTube video URLs (default: youtube_urls.txt)')
     args = parser.parse_args()
 
     download_audio_urls(args.url_file, args.target_folder, args.bitrate)
