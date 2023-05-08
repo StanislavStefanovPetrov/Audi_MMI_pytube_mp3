@@ -56,6 +56,10 @@ def download_audio_urls(url_file='youtube_urls.txt', target_folder='downloads', 
     if not os.path.exists(target_folder):
         os.makedirs(target_folder)
 
+    if not os.path.exists(url_file):
+        with open(url_file, 'w+') as f:
+            pass  # do nothing, file is created
+    
     with open(url_file, 'r') as f:
         urls = [line.strip() for line in f if is_validate_url(line.strip())]
 
