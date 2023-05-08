@@ -4,7 +4,7 @@ import argparse
 from pytube import YouTube
 
 # Define the path to the text file containing the YouTube video URLs.
-url_file = 'urls.txt'
+url_file = 'download_youtube_mp3_urls.txt'
 
 # Regular expression pattern for matching YouTube video URLs.
 url_pattern = r'^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+'
