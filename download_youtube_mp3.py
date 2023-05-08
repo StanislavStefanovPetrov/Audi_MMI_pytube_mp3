@@ -1,6 +1,7 @@
 import os
 import re
 import argparse
+import eyed3
 from pytube import YouTube
 
 
@@ -42,6 +43,15 @@ def download_audio(url, target_folder='downloads', bitrate=128):
     filename = os.path.join(target_folder, filename)
 
     os.system(f'ffmpeg -i "{audio_stream.url}" -b:a {bitrate}k "{filename}"')
+    
+    # Add metadata to the MP3 file
+    audiofile = eyed3.load(filename)
+    if audiofile is not None:
+        audiofile.tag.artist = yt.author
+        audiofile.tag.album = yt.title
+        audiofile.tag.title = yt.title
+        audiofile.tag.track_num = (1, 1)  # set track number to 1
+        audiofile.tag.save()
 
 
 def download_audio_urls(url_file='youtube_urls.txt', target_folder='downloads', bitrate=128):
