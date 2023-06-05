@@ -2,3 +2,7 @@
 *.txt
 # ignore all logs
 *.mp3
+
+
+# Allow requirements.txt
+!requirements.txt
