@@ -114,7 +114,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Download audio from YouTube videos.')
     parser.add_argument('--bitrate', type=int, default=320, help='audio bitrate in kbps (default: 320 kbps)')
     parser.add_argument('--channels', type=int, default=2, help='audio channels (default: 2)')
-    parser.add_argument('--sample_rate', type=int, default=48000, help='audio sample_rate (default: 48000 kbps)')
+    parser.add_argument('--sample_rate', type=int, default=48000, help='audio audio sample rate in Hz (default: 48000 Hz)')
     parser.add_argument('--target_folder', type=str, default='downloads', help='target folder path (default: downloads)')
     parser.add_argument('--url_file', type=str, default='youtube_urls.txt', help='path to the file containing the YouTube video URLs (default: youtube_urls.txt)')
     args = parser.parse_args()
