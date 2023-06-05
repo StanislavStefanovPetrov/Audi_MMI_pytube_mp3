@@ -21,6 +21,17 @@ def is_validate_url(url):
 
     return True
 
+def remove_non_ascii(text):
+    # Remove non-ASCII characters
+    text = text.encode("ascii", "ignore").decode()
+
+    # Remove non-alphanumeric characters except basic punctuation signs
+    text = re.sub(r"[^a-zA-Z0-9\s.,!?()-]+", "", text)
+
+    # Replace whitespace with dashes
+    text = re.sub(r"\s+", " ", text.strip())
+
+    return text
 
 def download_audio(url, target_folder='downloads', bitrate=320):
     """
@@ -55,7 +66,7 @@ def download_audio(url, target_folder='downloads', bitrate=320):
     file_path = audio_stream.default_filename
 
     # Convert the downloaded file to MP3 using ffmpeg
-    output_filename = os.path.join(target_folder, f"{file_path.split('.')[0]}.mp3")      
+    output_filename = os.path.join(target_folder, f"{remove_non_ascii(file_path).split('.')[0]}.mp3")      
     ffmpeg.input(file_path).output(output_filename, **audio_format).run(overwrite_output=True)
 
     # Remove the temporary video file
@@ -71,7 +82,6 @@ def download_audio(url, target_folder='downloads', bitrate=320):
         audiofile.tag.save()
 
     print(f"Downloaded audio for {yt.title}...")
-
 
 def download_audio_urls(url_file='youtube_urls.txt', target_folder='downloads', bitrate=320):
     """
