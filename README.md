@@ -6,7 +6,7 @@ Audi YouTube Downloader is a Python script that allows you to download audio fil
 
 - Download audio files from YouTube and convert them to the proper format for Audi MMI systems.
 - Specify a list of YouTube URLs in a text file and download all the corresponding audio files.
-- Customize the audio bitrate for the downloaded files.
+- Customize the audio bitrate, sample rate and audio channels for the downloaded files.
 - Organize downloaded files in a target folder for easy access.
 
 ## Compatibility
