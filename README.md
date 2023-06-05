@@ -15,6 +15,10 @@ This project takes into account the limitations of Audi MMI systems regarding tr
 
 - [AudiWorld Forum: MMI 3G - Largest SD Card Size](https://www.audiworld.com/forums/q5-sq5-mki-8r-discussion-129/mmi-3g-largest-sd-card-size-2872958/#&gid=1&pid=1)
 
+## Prerequisites
+
+- Python 3.9
+
 ## Usage
 
 1. Clone or download the repository to your local machine.
