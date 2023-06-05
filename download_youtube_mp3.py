@@ -33,7 +33,7 @@ def remove_non_ascii(text):
 
     return text
 
-def download_audio(url, target_folder='downloads', bitrate=320):
+def download_audio(url, target_folder='downloads', bitrate=320, channels=2, sample_rate=48000):
     """
     Downloads the audio stream from a YouTube video.
 
@@ -41,6 +41,8 @@ def download_audio(url, target_folder='downloads', bitrate=320):
         url (str): The YouTube video URL.
         target_folder (str): The path to the target folder to save the audio file to. Default is 'downloads'.
         bitrate (int): The desired audio bitrate in kbps. Default is 320 kbps.
+        channels (int): The number of audio channels. Default is 2 channels.
+        sample_rate (int): The audio sample rate in Hz. Default is 48000 Hz.
     """
     # Validate the YouTube video URL
     if not is_validate_url(url):
@@ -50,8 +52,8 @@ def download_audio(url, target_folder='downloads', bitrate=320):
     audio_format = {
         "format": "mp3",
         "audio_bitrate": f"{bitrate}k",
-        "channels": 2,
-        "sample_rate": 48000,
+        "channels": channels,
+        "sample_rate": sample_rate,
     }
 
     yt = YouTube(url)
@@ -75,15 +77,15 @@ def download_audio(url, target_folder='downloads', bitrate=320):
     # Add metadata to the MP3 file
     audiofile = eyed3.load(output_filename)
     if audiofile is not None:
-        audiofile.tag.artist = yt.author
-        audiofile.tag.album = yt.title
-        audiofile.tag.title = yt.title
+        audiofile.tag.artist = remove_non_ascii(yt.author)
+        audiofile.tag.album = remove_non_ascii(yt.title)
+        audiofile.tag.title = remove_non_ascii(yt.title)
         audiofile.tag.track_num = (1, 1)  # set track number to 1
         audiofile.tag.save()
 
     print(f"Downloaded audio for {yt.title}...")
 
-def download_audio_urls(url_file='youtube_urls.txt', target_folder='downloads', bitrate=320):
+def download_audio_urls(url_file='youtube_urls.txt', target_folder='downloads', bitrate=320, channels=2, sample_rate=48000):
     """
     Downloads the audio stream from multiple YouTube videos specified in a text file.
 
@@ -91,6 +93,8 @@ def download_audio_urls(url_file='youtube_urls.txt', target_folder='downloads', 
         url_file (str): The path to the text file containing the YouTube video URLs. Default is 'youtube_urls.txt'.
         target_folder (str): The path to the target folder to save the audio files to. Default is 'downloads'.
         bitrate (int): The desired audio bitrate in kbps. Default is 320 kbps.
+        channels (int): The desired audio channels. Default is 2.
+        sample_rate (int): The desired audio sample_rate. Default is 48000.
     """
     if not os.path.exists(target_folder):
         os.makedirs(target_folder)
@@ -103,14 +107,16 @@ def download_audio_urls(url_file='youtube_urls.txt', target_folder='downloads', 
         urls = [line.strip() for line in f if is_validate_url(line.strip())]
 
     for url in urls:
-        download_audio(url, target_folder, bitrate)
+        download_audio(url, target_folder, bitrate, channels, sample_rate)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Download audio from YouTube videos.')
     parser.add_argument('--bitrate', type=int, default=320, help='audio bitrate in kbps (default: 320 kbps)')
+    parser.add_argument('--channels', type=int, default=2, help='audio channels (default: 2)')
+    parser.add_argument('--sample_rate', type=int, default=48000, help='audio sample_rate (default: 48000 kbps)')
     parser.add_argument('--target_folder', type=str, default='downloads', help='target folder path (default: downloads)')
     parser.add_argument('--url_file', type=str, default='youtube_urls.txt', help='path to the file containing the YouTube video URLs (default: youtube_urls.txt)')
     args = parser.parse_args()
 
-    download_audio_urls(args.url_file, args.target_folder, args.bitrate)
+    download_audio_urls(args.url_file, args.target_folder, args.bitrate, args.channels, args.sample_rate)
