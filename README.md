@@ -21,7 +21,7 @@ This project takes into account the limitations of Audi MMI systems regarding tr
 
 2. Install the required dependencies by running the following command:
 ```sh
-pip install -r requirements.txt
+yarn install
 ```
 
 
