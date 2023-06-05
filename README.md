@@ -33,7 +33,7 @@ pip3 install -r requirements.txt
 
 4. Run the script using the following command:
 ```sh
-python main.py --target_folder <target_folder_path>
+python3 download_youtube_mp3.py
 ```
 
 
