@@ -28,7 +28,7 @@ def remove_non_ascii(text):
     # Remove non-alphanumeric characters except basic punctuation signs
     text = re.sub(r"[^a-zA-Z0-9\s.,!?()-]+", "", text)
 
-    # Replace whitespace with dashes
+    # Replace whitespace with a single space
     text = re.sub(r"\s+", " ", text.strip())
 
     return text
