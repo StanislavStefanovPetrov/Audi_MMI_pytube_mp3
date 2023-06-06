@@ -14,7 +14,9 @@ Audi YouTube Downloader is a Python script that allows you to download audio fil
 This project takes into account the limitations of Audi MMI systems regarding track formats. It ensures that the downloaded audio files are in a format supported by Audi MMI systems. For more information on Audi MMI system limitations, refer to the following sources:
 
 - [AudiWorld Forum: MMI 3G - Largest SD Card Size](https://www.audiworld.com/forums/q5-sq5-mki-8r-discussion-129/mmi-3g-largest-sd-card-size-2872958/#&gid=1&pid=1)
+
 ![Supported media and file format](https://github.com/StanislavStefanovPetrov/Audi_MMI_pytube_mp3/assets/29039888/371077bf-6104-48df-bf05-c8169dc06e2b)
+
 ## Prerequisites
 
 - Python 3.9
@@ -45,6 +47,10 @@ Optional arguments:
 - `--target_folder`: Specify the path to the folder where the downloaded audio files will be saved (default: `./downloads`).
 
 5. The script will download the audio files from the provided YouTube URLs and save them in the specified target folder. The downloaded files will be in a format compatible with Audi MMI systems.
+
+## Tested on:
+
+- Audi MMI 3G+ (Audi Q7 4LB)
 
 ## Notes
 
