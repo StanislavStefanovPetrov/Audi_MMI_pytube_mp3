@@ -85,6 +85,9 @@ def download_audio(url, target_folder='downloads', bitrate=320, channels=2, samp
             audiofile.tag.save()
 
         print(f"Downloaded audio for {yt.title}...")
+    except KeyError as e:
+        # https://github.com/pytube/pytube/issues/912
+        print("An KeyError occurred:", str(e))
     except Exception as e:
         print("An error occurred:", str(e))
 
