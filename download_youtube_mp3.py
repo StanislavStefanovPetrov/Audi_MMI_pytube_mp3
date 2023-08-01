@@ -58,32 +58,36 @@ def download_audio(url, target_folder='downloads', bitrate=320, channels=2, samp
 
     yt = YouTube(url)
     print(f"Downloading audio for {yt.title}...")
+    
+    try:
+        audio_stream = yt.streams.filter(only_audio=True).first()
 
-    audio_stream = yt.streams.filter(only_audio=True).first()
+        # Download the video stream
+        audio_stream.download()
 
-    # Download the video stream
-    audio_stream.download()
+        # Get the downloaded file path
+        file_path = audio_stream.default_filename
 
-    # Get the downloaded file path
-    file_path = audio_stream.default_filename
+        # Convert the downloaded file to MP3 using ffmpeg
+        output_filename = os.path.join(target_folder, f"{remove_non_ascii(file_path).split('.')[0]}.mp3")      
+        ffmpeg.input(file_path).output(output_filename, **audio_format).run(overwrite_output=True)
 
-    # Convert the downloaded file to MP3 using ffmpeg
-    output_filename = os.path.join(target_folder, f"{remove_non_ascii(file_path).split('.')[0]}.mp3")      
-    ffmpeg.input(file_path).output(output_filename, **audio_format).run(overwrite_output=True)
+        # Remove the temporary video file
+        os.remove(file_path)
 
-    # Remove the temporary video file
-    os.remove(file_path)
+        # Add metadata to the MP3 file
+        audiofile = eyed3.load(output_filename)
+        if audiofile is not None:
+            audiofile.tag.artist = remove_non_ascii(yt.author)
+            audiofile.tag.album = remove_non_ascii(yt.title)
+            audiofile.tag.title = remove_non_ascii(yt.title)
+            audiofile.tag.track_num = (1, 1)  # set track number to 1
+            audiofile.tag.save()
 
-    # Add metadata to the MP3 file
-    audiofile = eyed3.load(output_filename)
-    if audiofile is not None:
-        audiofile.tag.artist = remove_non_ascii(yt.author)
-        audiofile.tag.album = remove_non_ascii(yt.title)
-        audiofile.tag.title = remove_non_ascii(yt.title)
-        audiofile.tag.track_num = (1, 1)  # set track number to 1
-        audiofile.tag.save()
+        print(f"Downloaded audio for {yt.title}...")
+    except Exception as e:
+        print("An error occurred:", str(e))
 
-    print(f"Downloaded audio for {yt.title}...")
 
 def download_audio_urls(url_file='youtube_urls.txt', target_folder='downloads', bitrate=320, channels=2, sample_rate=48000):
     """
